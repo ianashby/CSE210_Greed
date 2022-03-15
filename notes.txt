@@ -1,0 +1,56 @@
+
+G R E E D
+
+Gems (*) and rocks (o) randomly appear and fall from the top of the screen.
+The player (#) can move left or right along the bottom of the screen.
+If the player touches a gem they earn a point.
+If the player touches a rock they lose a point.
+Gems and rocks are removed when the player touches them.
+The game continues until the player closes the window.
+
+__main__.py
+
+casting
+    Actor
+        ___init__()
+        + move_next
+    ^
+    FallingObject 
+        + add_points()
+    ^
+    Player 
+        + receive input()
+    ^
+    Points_display
+        + point_count
+
+
+directing
+    Director
+        __init__()
+        + start_game()
+        - get_inputs()
+        - do_updates()
+            + spawn()
+            + despawn()
+        - do_outputs() 
+
+services
+    KeyboardService
+        __init__()
+        + get_direction()
+
+    VideoService
+        __init__()
+        (same as RFK class)
+        
+shared
+    Color
+        __init__()
+        (same as RFK class)
+
+    Point
+        __init__()
+        (same as RFK class)
+        
+    
