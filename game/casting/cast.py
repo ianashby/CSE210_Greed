@@ -1,3 +1,6 @@
+from game.casting.actor import Actor
+from game.shared.point import Point
+import random
 class Cast:
     """A collection of actors.
 
@@ -74,13 +77,26 @@ class Cast:
         if group in self._actors:
             self._actors[group].remove(actor)
 
-    def spawn(self, type, location =0):
-        """Responsibility: 
+    def spawn(self, type, velocity, max_x):
+        """Spawns a rock or gem somewhere along the top of the screen to start moving down 
         Args:
             type (String): either gem or rock
-            location (int): option to set location, if not, will be chosen randomly
+            max_x (int): the heighest x accepted by the screen
         """
-        pass
+        location = random.randint(max_x)
+        
+        if type == 'rock':
+            new_actor = Falling_object(0)
+            new_actor.set_text('[]')
+            
+        
+        if type == 'gem':
+            new_actor = Actor(1)
+            new_actor.set_text('*')
+
+        new_actor.set_velocity(velocity)
+        new_actor.set_position(Point(location,0))
+        self.add_actor('falling_objects',new_actor)
+        
     
-    def despawn(self,cast):
-        pass
+    

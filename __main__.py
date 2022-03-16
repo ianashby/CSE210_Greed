@@ -1,6 +1,8 @@
 import os
 import random
 
+from numpy import choose
+
 from game.casting.actor import Actor
 from game.casting.falling_object import FallingObject
 from game.casting.cast import Cast
@@ -24,7 +26,7 @@ ROWS = 40
 CAPTION = "Robot Finds Kitten"
 DATA_PATH = os.path.dirname(os.path.abspath(__file__)) + "/data/messages.txt"
 WHITE = Color(255, 255, 255)
-DEFAULT_ARTIFACTS = 40
+DEFAULT_FALLING_OBJECTS = 40
 
 
 def main():
@@ -34,7 +36,7 @@ def main():
     
     # create the banner
     banner = Actor()
-    banner.set_text("")
+    banner.set_text("Score: ")
     banner.set_font_size(FONT_SIZE)
     banner.set_color(WHITE)
     banner.set_position(Point(CELL_SIZE, 0))
@@ -42,37 +44,15 @@ def main():
     
     # create the robot
     x = int(MAX_X / 2)
-    y = int(MAX_Y / 2)
+    y = int(575)
     position = Point(x, y)
 
-    robot = Actor()
-    robot.set_text("#")
-    robot.set_font_size(FONT_SIZE)
-    robot.set_color(WHITE)
-    robot.set_position(position)
-    cast.add_actor("robots", robot)
-
-    for n in range(DEFAULT_ARTIFACTS):
-        text = chr(random.randint(33, 126))
-        
-
-        x = random.randint(1, COLS - 1)
-        y = random.randint(1, ROWS - 1)
-        position = Point(x, y)
-        position = position.scale(CELL_SIZE)
-
-        r = random.randint(0, 255)
-        g = random.randint(0, 255)
-        b = random.randint(0, 255)
-        color = Color(r, g, b)
-        
-        falling_object = FallingObject()
-        falling_object.set_text(text)
-        falling_object.set_font_size(FONT_SIZE)
-        falling_object.set_color(color)
-        falling_object.set_position(position)
-        
-        cast.add_actor("falling_objects", falling_object)
+    prospector = Actor()
+    prospector.set_text("#")
+    prospector.set_font_size(FONT_SIZE)
+    prospector.set_color(WHITE)
+    prospector.set_position(position)
+    cast.add_actor("prospector", prospector)
     
     # start the game
     keyboard_service = KeyboardService(CELL_SIZE)

@@ -1,3 +1,5 @@
+from game.shared.point import Point
+
 class Director:
     """A person who directs the game. 
     
@@ -24,12 +26,15 @@ class Director:
         Args:
             cast (Cast): The cast of actors.
         """
+        self._score = 0
+        self._ticks = 0
         self._video_service.open_window()
         while self._video_service.is_window_open():
             self._get_inputs(cast)
             self._do_updates(cast)
             self._do_outputs(cast)
         self._video_service.close_window()
+        
 
     def _get_inputs(self, cast):
         """Gets directional input from the keyboard and applies it to the prospector.
@@ -42,11 +47,13 @@ class Director:
         prospector.set_velocity(velocity)        
 
     def _do_updates(self, cast):
-        """Updates the prospector's position and resolves any collisions with falling objects.
+        """Updates the prospector's position, spawns new objects and resolves any collisions with falling objects.
         
         Args:
             cast (Cast): The cast of actors.
         """
+        self._ticks += 1
+        
         banner = cast.get_first_actor("banners")
         prospector = cast.get_first_actor("prospectors")
         falling_objects = cast.get_actors("falling_objects")
@@ -56,10 +63,21 @@ class Director:
         max_y = self._video_service.get_height()
         prospector.move_next(max_x, max_y)
         
+        if self._ticks % 12 == 0:
+            cast.spawn('rock',Point(0,-1),max_x)
+            cast.spawn('gem',Point(0,-1),max_x)
+
         for falling_object in falling_objects:
-            if prospector.get_position().equals(falling_object.get_position()):
-                message = falling_object.get_message()
-                banner.set_text(message)    
+            falling_object.move_next(max_x, max_y)
+
+            position = falling_object.get_position()
+            if prospector.get_position().equals(position):
+                self.score += falling_object.points
+                cast.remove_actor('falling_objects',falling_object)
+            if position.get_y() <= 0:
+                cast.remove_actor('falling_objects',falling_object)
+                
+
         
     def _do_outputs(self, cast):
         """Draws the actors on the screen.
