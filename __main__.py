@@ -1,7 +1,6 @@
 import os
 import random
 
-from numpy import choose
 
 from game.casting.actor import Actor
 from game.casting.falling_object import Falling_object
