@@ -28,6 +28,7 @@ class Director:
         """
         self._score = 0
         self._ticks = 0
+        self._difficulty = 12
         self._video_service.open_window()
         while self._video_service.is_window_open():
             self._get_inputs(cast)
@@ -53,26 +54,29 @@ class Director:
             cast (Cast): The cast of actors.
         """
         self._ticks += 1
-        
+        if self._score <= 0:
+            self._score=0
         banner = cast.get_first_actor("banners")
         prospector = cast.get_first_actor("prospectors")
         falling_objects = cast.get_actors("falling_objects")
 
-        banner.set_text("")
+        banner.set_text(f"Score: {self._score}")
         max_x = self._video_service.get_width()
         max_y = self._video_service.get_height()
         prospector.move_next(max_x, max_y)
-        
-        if self._ticks % 12 == 0:
-            cast.spawn('rock',Point(0,-1),max_x)
-            cast.spawn('gem',Point(0,-1),max_x)
+        self._difficulty = 150 * (1/(self._score+11))
+        print(self._difficulty)
+        if self._ticks % int(self._difficulty) == 0:
+
+            cast.spawn('rock',Point(0,5),max_x)
+            cast.spawn('gem',Point(0,5),max_x)
 
         for falling_object in falling_objects:
             falling_object.move_next(max_x, max_y)
 
             position = falling_object.get_position()
             if prospector.get_position().equals(position):
-                self.score += falling_object.points
+                self._score += falling_object.points
                 cast.remove_actor('falling_objects',falling_object)
             if position.get_y() <= 0:
                 cast.remove_actor('falling_objects',falling_object)

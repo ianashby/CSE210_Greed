@@ -1,4 +1,5 @@
 from game.casting.actor import Actor
+from game.casting.falling_object import Falling_object
 from game.shared.point import Point
 import random
 class Cast:
@@ -83,19 +84,21 @@ class Cast:
             type (String): either gem or rock
             max_x (int): the heighest x accepted by the screen
         """
-        location = random.randint(max_x)
+        location = random.randint(0,60)*15
         
         if type == 'rock':
-            new_actor = Falling_object(0)
-            new_actor.set_text('[]')
+            new_actor = Falling_object(-10)
+            new_actor.set_text('o')
+            new_actor.set_color(0)
             
         
         if type == 'gem':
-            new_actor = Actor(1)
+            new_actor = Falling_object(1)
             new_actor.set_text('*')
+            new_actor.set_color(1)
 
         new_actor.set_velocity(velocity)
-        new_actor.set_position(Point(location,0))
+        new_actor.set_position(Point(location,600))
         self.add_actor('falling_objects',new_actor)
         
     

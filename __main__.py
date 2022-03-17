@@ -4,7 +4,7 @@ import random
 from numpy import choose
 
 from game.casting.actor import Actor
-from game.casting.falling_object import FallingObject
+from game.casting.falling_object import Falling_object
 from game.casting.cast import Cast
 
 from game.directing.director import Director
@@ -23,8 +23,7 @@ CELL_SIZE = 15
 FONT_SIZE = 15
 COLS = 60
 ROWS = 40
-CAPTION = "Robot Finds Kitten"
-DATA_PATH = os.path.dirname(os.path.abspath(__file__)) + "/data/messages.txt"
+CAPTION = "Greed"
 WHITE = Color(255, 255, 255)
 DEFAULT_FALLING_OBJECTS = 40
 
@@ -36,9 +35,9 @@ def main():
     
     # create the banner
     banner = Actor()
-    banner.set_text("Score: ")
+    banner.set_text("")
     banner.set_font_size(FONT_SIZE)
-    banner.set_color(WHITE)
+    banner.set_color(2)
     banner.set_position(Point(CELL_SIZE, 0))
     cast.add_actor("banners", banner)
     
@@ -50,9 +49,9 @@ def main():
     prospector = Actor()
     prospector.set_text("#")
     prospector.set_font_size(FONT_SIZE)
-    prospector.set_color(WHITE)
+    prospector.set_color(2)
     prospector.set_position(position)
-    cast.add_actor("prospector", prospector)
+    cast.add_actor("prospectors", prospector)
     
     # start the game
     keyboard_service = KeyboardService(CELL_SIZE)

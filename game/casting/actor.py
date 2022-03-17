@@ -16,12 +16,12 @@ class Actor:
         _velocity (Point): The speed and direction.
     """
 
-    def __init__(self, color_index: int=1):
+    def __init__(self,color_index=1):
         """Constructs a new Actor."""
-        colors = [Color(160, 163, 175), Color(80,220,100), Color(0, 0, 0)]
+        self.colors = [Color(160, 163, 175), Color(80,220,100), Color(255,255,255)]
         self._text = ""
         self._font_size = 15
-        self._color = colors[color_index]
+        self._color = self.colors[color_index]
         self._position = Point(0, 0)
         self._velocity = Point(0, 0)
 
@@ -77,13 +77,15 @@ class Actor:
         y = (self._position.get_y() + self._velocity.get_y()) % max_y
         self._position = Point(x, y)
 
-    def set_color(self, color):
+    def set_color(self, color_index):
         """Updates the color to the given one.
         
         Args:
             color (Color): The given color.
         """
-        self._color = color
+        
+
+        self._color = self.colors[color_index]
 
     def set_position(self, position):
         """Updates the position to the given one.
