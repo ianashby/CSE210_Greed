@@ -64,7 +64,7 @@ class Director:
         max_x = self._video_service.get_width()
         max_y = self._video_service.get_height()
         prospector.move_next(max_x, max_y)
-        self._difficulty = 150 * (1/(self._score+11)+1)
+        self._difficulty = 150 * (1/(self._score+11))+1
         
         if self._ticks % int(self._difficulty) == 0:
 
